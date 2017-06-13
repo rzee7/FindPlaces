@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FindPlaces.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    Title="MainPage"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <StackLayout
+        BackgroundColor="Red"
+        HorizontalOptions="Fill"
+        Spacing="0"
+        VerticalOptions="Start">
+        <SearchBar Placeholder="Search Query" />
+        <StackLayout
+            Orientation="Horizontal"
+            Spacing="5"
+            VerticalOptions="Start">
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="65"
+                Source="Icon-Small-40.png"
+                VerticalOptions="FillAndExpand"
+                WidthRequest="65" />
+            <StackLayout
+                Padding="5,5,5,0"
+                HorizontalOptions="FillAndExpand"
+                Spacing="0">
+                <Label FontSize="Default" Text="Place Title" />
+                <Label FontSize="Micro" Text="Place Address" />
+                <StackLayout
+                    HorizontalOptions="End"
+                    Orientation="Horizontal"
+                    Spacing="3"
+                    VerticalOptions="Center">
+                    <Label
+                        FontSize="Micro"
+                        Text="4.5"
+                        VerticalTextAlignment="Center" />
+                    <Image HeightRequest="13" Source="star" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
