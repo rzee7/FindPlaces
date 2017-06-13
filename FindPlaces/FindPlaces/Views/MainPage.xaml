@@ -14,7 +14,10 @@
             Placeholder="Search Query"
             SearchCommand="{Binding SearchCommand}"
             Text="{Binding SearchQuery}" />
-        <ListView HasUnevenRows="True" ItemsSource="{Binding Places}">
+        <ListView
+            HasUnevenRows="True"
+            ItemAppearing="ListView_ItemAppearing"
+            ItemsSource="{Binding Places}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
