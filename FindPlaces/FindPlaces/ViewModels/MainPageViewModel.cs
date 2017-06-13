@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using FindPlaces.Contracts;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -9,6 +10,12 @@ namespace FindPlaces.ViewModels
 {
     public class MainPageViewModel : BindableBase, INavigationAware
     {
+        #region Private fields
+
+        IApiService _apiServuce;
+
+        #endregion
+
         #region Properties
 
         private string _title;
@@ -29,9 +36,9 @@ namespace FindPlaces.ViewModels
 
         #region Constructor
 
-        public MainPageViewModel()
+        public MainPageViewModel(IApiService apiService)
         {
-
+            _apiServuce = apiService;
         }
 
         #endregion
