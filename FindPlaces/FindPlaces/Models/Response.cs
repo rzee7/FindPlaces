@@ -14,5 +14,7 @@ namespace FindPlaces.Models
         [JsonProperty("status")]
         public string Message { get; set; }
         public bool IsSuccess { get { return Message.ToLower().Equals("ok"); } }
+        [JsonProperty("next_page_token")]
+        public string NextPageToken { get; set; }
     }
 }

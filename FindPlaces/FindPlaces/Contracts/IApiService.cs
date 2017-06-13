@@ -17,6 +17,6 @@ namespace FindPlaces.Contracts
         /// </summary>
         /// <param name="query">Search query.</param>
         /// <returns></returns>
-        Task<Response> FetchData(string query);
+        Task<Response> FetchData(string query, string nextPageToken = "");
     }
 }

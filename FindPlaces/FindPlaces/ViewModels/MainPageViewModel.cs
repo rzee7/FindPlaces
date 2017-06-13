@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace FindPlaces.ViewModels
 {
-    public class MainPageViewModel : BindableBase, INavigationAware
+    public class MainPageViewModel : BindableBase
     {
         #region Private fields
 
@@ -26,11 +26,15 @@ namespace FindPlaces.ViewModels
         {
             _apiServuce = apiService;
             _dialogService = dialogService;
+            Places = new ObservableCollection<Place>();
+            IsEmpty = true;
         }
 
         #endregion
 
         #region Properties
+
+        public string PreviousSearchQuery { get; set; }
 
         private string _title;
         public string Title
@@ -50,7 +54,15 @@ namespace FindPlaces.ViewModels
         public string SearchQuery
         {
             get { return _searchQuery; }
-            set { SetProperty(ref _searchQuery, value); }
+            set
+            {
+                SetProperty(ref _searchQuery, value);
+                if (string.IsNullOrEmpty(SearchQuery))
+                {
+                    Places.Clear();
+                    IsEmpty = true;
+                }
+            }
         }
 
         private ObservableCollection<Place> _places;
@@ -59,55 +71,76 @@ namespace FindPlaces.ViewModels
             get { return  _places; }
             set { SetProperty(ref _places, value); }
         }
+        private string _nextPageToken;
+        public string NextPageToken
+        {
+            get { return _nextPageToken; }
+            set { SetProperty(ref _nextPageToken, value); }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set { SetProperty(ref _statusMessage, value); }
+        }
+
+        private bool _isEmpty;
+        public bool IsEmpty
+        {
+            get { return _isEmpty; }
+            set { SetProperty(ref _isEmpty, value); if (IsEmpty) StatusMessage = Messages.NoResult; }
+        }
 
         #endregion
 
         #region Commands
 
-        private DelegateCommand _searchCommand;
-        public DelegateCommand SearchCommand =>
-            _searchCommand ?? (_searchCommand = new DelegateCommand(OnSearch));
+        private DelegateCommand<string> _searchCommand;
+        public DelegateCommand<string> SearchCommand =>
+            _searchCommand ?? (_searchCommand = new DelegateCommand<string>(OnSearch));
 
         #endregion
 
         #region Internal Operations
 
-        async void OnSearch()
+        async void OnSearch(string nextPageToken)
         {
-            if (string.IsNullOrWhiteSpace(SearchQuery))
-            {
-                await _dialogService.DisplayAlertAsync(Constants.DialogTitle, Messages.QueryRequired, Constants.CancelButton);
+            //Ignoring if same query, This seems bug in SearchBar Command, It executing every time you clicks text field
+            if (SearchQuery.Equals(PreviousSearchQuery, StringComparison.CurrentCultureIgnoreCase) && string.IsNullOrEmpty(nextPageToken) && Places.Count > 0)
                 return;
-            }
-            var fetchedPlaces = await _apiServuce.FetchData(SearchQuery);
-            if (fetchedPlaces != null && fetchedPlaces.IsSuccess)
+            if (!string.IsNullOrEmpty(nextPageToken))
             {
-                Places = new ObservableCollection<Place>(fetchedPlaces.Places);
+                StatusMessage = Messages.LoadingMore;
             }
             else
             {
-                await _dialogService.DisplayAlertAsync(Constants.DialogTitle, !string.IsNullOrEmpty(fetchedPlaces.Message) ? fetchedPlaces.Message : Messages.WentWrong, Constants.Ok);
+                StatusMessage = Messages.DefaultStatus;
+                Places.Clear();
             }
-        }
+          
+            IsEmpty = false;
+            IsBusy = true;
 
-        #endregion
+            PreviousSearchQuery = SearchQuery;
 
-        #region INavigation Aware Implementation
-
-        public void OnNavigatedFrom(NavigationParameters parameters)
-        {
-
-        }
-
-        public void OnNavigatingTo(NavigationParameters parameters)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationParameters parameters)
-        {
-            if (parameters.ContainsKey("title"))
-                Title = (string)parameters["title"] + " and Prism";
+            var fetchedPlaces = await _apiServuce.FetchData(SearchQuery.Trim());
+            if (fetchedPlaces != null && fetchedPlaces.IsSuccess)
+            {
+                IsEmpty = false;
+                NextPageToken = fetchedPlaces.NextPageToken;
+                foreach (var item in fetchedPlaces.Places)
+                {
+                    Places.Add(item); //I'm aware this is slow but List has some limitation with INotify.
+                }
+            }
+            else
+            {
+                IsBusy = false;
+                await _dialogService.DisplayAlertAsync(Constants.DialogTitle, !string.IsNullOrEmpty(fetchedPlaces.Message) ? fetchedPlaces.Message : Messages.WentWrong, Constants.Ok);
+                IsEmpty = true;
+            }
+            IsBusy = false;
         }
 
         #endregion

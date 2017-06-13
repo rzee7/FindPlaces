@@ -10,6 +10,17 @@ namespace FindPlaces.Views
         {
             InitializeComponent();
         }
+        #region OnAppearing
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            mainLayout.BindingContext = this.BindingContext; //Need to pass BindingConetext control to control.
+        }
+
+        #endregion
+
+        #region ListView Items Appearing
 
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
@@ -17,8 +28,11 @@ namespace FindPlaces.Views
                 return;
             if (e.Item.Equals(ViewModel.Places[ViewModel.Places.Count - 1]))
             {
-                //Load Items
+                //Hungry! Loading More Items
+                ViewModel.SearchCommand.Execute(ViewModel.NextPageToken);
             }
         }
+
+        #endregion
     }
 }

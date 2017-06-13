@@ -23,8 +23,9 @@ namespace FindPlaces.Service
         /// Fetch data from server.
         /// </summary>
         /// <param name="query">Search query.</param>
+        /// <param name="nextPageToken">Fetch next page with token.</param>
         /// <returns></returns>
-        public async Task<Response> FetchData(string query)
+        public async Task<Response> FetchData(string query, string nextPageToken = "")
         {
             var returnResult = new Response();
 
@@ -35,7 +36,7 @@ namespace FindPlaces.Service
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.Timeout = new TimeSpan(0, 0, 15);
 
-                var result = await client.GetAsync(new Uri(string.Format(Constants.PlaceApiHostURL, query, Constants.PlaceAppApiKey)));
+                var result = await client.GetAsync(new Uri(Constants.GetServerURL(query, nextPageToken)));
 
                 if (result != null)
                 {

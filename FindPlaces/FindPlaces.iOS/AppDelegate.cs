@@ -25,6 +25,34 @@ namespace FindPlaces.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            //Theme
+            //var tintColor = UIColor.FromRGB(35, 204, 170);
+            //UINavigationBar.Appearance.BarTintColor = tintColor;
+            //UINavigationBar.Appearance.TintColor = UIColor.White;
+            //UINavigationBar.Appearance.TitleTextAttributes = new UIStringAttributes
+            //{
+            //    ForegroundColor = UIColor.White
+            //};
+
+            //UIProgressView.Appearance.ProgressTintColor = tintColor;
+
+            //UISlider.Appearance.MinimumTrackTintColor = tintColor;
+            //UISlider.Appearance.MaximumTrackTintColor = tintColor;
+            //UISlider.Appearance.ThumbTintColor = tintColor;
+
+            //UISwitch.Appearance.OnTintColor = tintColor;
+
+            //UITableViewHeaderFooterView.Appearance.TintColor = tintColor;
+
+            ////UITableView.Appearance.SectionIndexBackgroundColor = AccentColor;
+            ////UITableView.Appearance.SeparatorColor = AccentColor;
+
+            //UITextField.Appearance.TintColor = tintColor;
+
+            //UIButton.Appearance.TintColor = tintColor;
+            //UIButton.Appearance.SetTitleColor(tintColor, UIControlState.Normal);
+
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);

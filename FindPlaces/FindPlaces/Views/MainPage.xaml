@@ -1,53 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="FindPlaces.Views.MainPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-    Title="MainPage"
-    prism:ViewModelLocator.AutowireViewModel="True">
-    <StackLayout
-        HorizontalOptions="Fill"
-        Spacing="0"
-        VerticalOptions="FillAndExpand">
-        <SearchBar
-            Placeholder="Search Query"
-            SearchCommand="{Binding SearchCommand}"
-            Text="{Binding SearchQuery}" />
-        <ListView
-            HasUnevenRows="True"
-            ItemAppearing="ListView_ItemAppearing"
-            ItemsSource="{Binding Places}">
+<ContentPage x:Class="FindPlaces.Views.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             Title="Find Places"
+             prism:ViewModelLocator.AutowireViewModel="True">
+    <StackLayout x:Name="mainLayout"
+                 HorizontalOptions="Fill"
+                 Spacing="0"
+                 VerticalOptions="FillAndExpand">
+        <SearchBar Placeholder="Search Query"
+                   SearchCommand="{Binding SearchCommand}"
+                   Text="{Binding SearchQuery}" />
+        <ListView HasUnevenRows="True"
+                  ItemAppearing="ListView_ItemAppearing"
+                  ItemsSource="{Binding Places}"
+                  VerticalOptions="FillAndExpand">
+            <ListView.Footer>
+                <Grid>
+                    <StackLayout BindingContext="{x:Reference Name=mainLayout}"
+                                 HorizontalOptions="Center"
+                                 IsVisible="{Binding BindingContext.IsBusy}"
+                                 Orientation="Horizontal">
+                        <ActivityIndicator HeightRequest="40"
+                                           IsRunning="{Binding BindingContext.IsBusy}"
+                                           VerticalOptions="Center"
+                                           WidthRequest="40" />
+                        <Label FontAttributes="Italic"
+                               FontSize="Small"
+                               HorizontalOptions="Fill"
+                               IsVisible="{Binding BindingContext.IsFinish}"
+                               Text="{Binding BindingContext.StatusMessage}"
+                               VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout BindingContext="{x:Reference Name=mainLayout}"
+                                 HorizontalOptions="Center"
+                                 IsVisible="{Binding BindingContext.IsEmpty}"
+                                 Orientation="Horizontal">
+                        <Image HeightRequest="40"
+                               Source="free"
+                               WidthRequest="40" />
+                        <Label FontAttributes="Italic"
+                               FontSize="Small"
+                               HorizontalOptions="Fill"
+                               Text="{Binding BindingContext.StatusMessage}"
+                               VerticalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+            </ListView.Footer>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.View>
-                            <StackLayout
-                                Margin="0,5,0,5"
-                                Orientation="Horizontal"
-                                Spacing="5"
-                                VerticalOptions="Start">
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="65"
-                                    Source="{Binding PlaceIcon}"
-                                    VerticalOptions="FillAndExpand"
-                                    WidthRequest="65" />
-                                <StackLayout
-                                    Padding="5,5,5,0"
-                                    HorizontalOptions="FillAndExpand"
-                                    Spacing="0">
+                            <StackLayout Margin="0,5,0,5"
+                                         Orientation="Horizontal"
+                                         Spacing="5"
+                                         VerticalOptions="Start">
+                                <Image Aspect="AspectFill"
+                                       HeightRequest="65"
+                                       Source="{Binding PlaceIcon}"
+                                       VerticalOptions="FillAndExpand"
+                                       WidthRequest="65" />
+                                <StackLayout HorizontalOptions="FillAndExpand"
+                                             Padding="5,5,5,0"
+                                             Spacing="0">
                                     <Label FontSize="Default" Text="{Binding Name}" />
                                     <Label FontSize="Micro" Text="{Binding Address}" />
-                                    <StackLayout
-                                        HorizontalOptions="End"
-                                        Orientation="Horizontal"
-                                        Spacing="3"
-                                        VerticalOptions="Center">
-                                        <Label
-                                            FontSize="Micro"
-                                            Text="{Binding Rating}"
-                                            VerticalTextAlignment="Center" />
+                                    <StackLayout HorizontalOptions="End"
+                                                 Orientation="Horizontal"
+                                                 Spacing="3"
+                                                 VerticalOptions="Center">
+                                        <Label FontSize="Micro"
+                                               Text="{Binding Rating}"
+                                               VerticalTextAlignment="Center" />
                                         <Image HeightRequest="13" Source="star" />
                                     </StackLayout>
                                 </StackLayout>
