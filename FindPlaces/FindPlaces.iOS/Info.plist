@@ -23,7 +23,7 @@
 	<key>MinimumOSVersion</key>
 	<string>6.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>FindPlaces</string>
+	<string>Find Places</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.yourcompany.FindPlaces</string>
 	<key>CFBundleVersion</key>

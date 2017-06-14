@@ -27,13 +27,13 @@ namespace FindPlaces.iOS
             global::Xamarin.Forms.Forms.Init();
 
             //Theme
-            //var tintColor = UIColor.FromRGB(35, 204, 170);
-            //UINavigationBar.Appearance.BarTintColor = tintColor;
-            //UINavigationBar.Appearance.TintColor = UIColor.White;
-            //UINavigationBar.Appearance.TitleTextAttributes = new UIStringAttributes
-            //{
-            //    ForegroundColor = UIColor.White
-            //};
+            var tintColor = UIColor.FromRGB(69, 90, 100);
+            UINavigationBar.Appearance.BarTintColor = tintColor;
+            UINavigationBar.Appearance.TintColor = UIColor.White;
+            UINavigationBar.Appearance.TitleTextAttributes = new UIStringAttributes
+            {
+                ForegroundColor = UIColor.White
+            };
 
             //UIProgressView.Appearance.ProgressTintColor = tintColor;
 

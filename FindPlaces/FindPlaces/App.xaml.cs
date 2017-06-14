@@ -12,7 +12,11 @@ namespace FindPlaces
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync("NavigationPage/MainPage?title=Hello%20from%20Xamarin.Forms");
+            NavigationService.NavigateAsync("NavigationPage/MainPage");
+        }
+        public App()
+        {
+            InitializeComponent();
         }
 
         protected override void RegisterTypes()

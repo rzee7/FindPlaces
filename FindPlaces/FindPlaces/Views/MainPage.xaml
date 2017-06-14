@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              Title="Find Places"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
              prism:ViewModelLocator.AutowireViewModel="True">
     <StackLayout x:Name="mainLayout"
                  HorizontalOptions="Fill"
@@ -12,7 +13,7 @@
         <SearchBar Placeholder="Search Query"
                    SearchCommand="{Binding SearchCommand}"
                    Text="{Binding SearchQuery}" />
-        <ListView HasUnevenRows="True"
+        <ListView HasUnevenRows="True" BackgroundColor="White"
                   ItemAppearing="ListView_ItemAppearing"
                   ItemsSource="{Binding Places}"
                   VerticalOptions="FillAndExpand">
@@ -52,7 +53,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.View>
-                            <StackLayout Margin="0,5,0,5"
+                            <StackLayout Margin="0,5,0,5" BackgroundColor="White"
                                          Orientation="Horizontal"
                                          Spacing="5"
                                          VerticalOptions="Start">
@@ -64,8 +65,8 @@
                                 <StackLayout HorizontalOptions="FillAndExpand"
                                              Padding="5,5,5,0"
                                              Spacing="0">
-                                    <Label FontSize="Default" Text="{Binding Name}" />
-                                    <Label FontSize="Micro" Text="{Binding Address}" />
+                                    <Label Style="{StaticResource titleLabelStyle}" Text="{Binding Name}" LineBreakMode="TailTruncation"  />
+                                    <Label FontSize="Micro" Text="{Binding Address}" LineBreakMode="TailTruncation" />
                                     <StackLayout HorizontalOptions="End"
                                                  Orientation="Horizontal"
                                                  Spacing="3"

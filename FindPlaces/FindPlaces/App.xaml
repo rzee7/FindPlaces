@@ -3,5 +3,49 @@
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
                         x:Class="FindPlaces.App">
+  <Application.Resources>
+    <ResourceDictionary>
+      <Color x:Key="primaryOrange">#F05A28</Color>
+      <Color x:Key="PageBackgroundColor">#CFD8DC</Color>
+      <Color x:Key="buttonGrayColor">#A5A5A5</Color>
 
+      <!--  Style  -->
+      <Style x:Key="pageStyle" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}" />
+      </Style>
+      <Style ApplyToDerivedTypes="true"
+             BasedOn="{StaticResource pageStyle}"
+             TargetType="ContentPage" />
+
+      <!--  Font Size  -->
+      <OnPlatform x:Key="NormalFontSize"
+                  x:TypeArguments="Font"
+                  Android="Small"
+                  WinPhone="Default"
+                  iOS="Micro" />
+
+      <!-- Title Font Size  -->
+      <OnPlatform x:Key="TitleFontSize"
+                  x:TypeArguments="Font"
+                  Android="Default"
+                  WinPhone="Default"
+                  iOS="Small" />
+
+      <!--  Default Label Style  -->
+      <Style x:Key="labelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="Gray" />
+        <Setter Property="Font" Value="{StaticResource TitleFontSize}" />
+        <Setter Property="FontFamily" Value="PingFangSC-Regular" />
+      </Style>
+      <Style BasedOn="{StaticResource labelStyle}" TargetType="Label" />
+      
+      <!--  Title Label Style  -->
+      <Style x:Key="titleLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="Font" Value="{StaticResource TitleFontSize}" />
+        <Setter Property="FontFamily" Value="PingFangSC-Regular" />
+      </Style>
+
+    </ResourceDictionary>
+  </Application.Resources>
 </prism:PrismApplication>
